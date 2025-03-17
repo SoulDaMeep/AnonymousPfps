@@ -16,7 +16,6 @@ void AnonymousPfps::onLoad()
 		cvarManager->executeCommand("sleep 500; plugin unload anonymouspfps");
 		return;
 	}
-	else IsSteam = true;
 
 
 	// Martinn's Code.
@@ -27,14 +26,7 @@ void AnonymousPfps::onLoad()
 		[this](auto caller, void* params, ...)
 		{
 			auto ROAargs = (UOnlineSubsystem_execReadOnlineAvatars_Params*)params;
-			ROAargs->PlayerNetIds.ArrayCount = 0;
+			ROAargs->Count = 0;
 		}
 	);
 }
-void AnonymousPfps::onUnload() {
-	// unhook the hook used only for steam players
-	// still doesnt show pfp's after unload (unhooking doesnt fix)
-	if (IsSteam)
-		gameWrapper->UnhookEvent("Function OnlineSubsystemSteamworks.OnlineSubsystemSteamworks.ReadOnlineAvatars");
-}
-
